@@ -2,7 +2,7 @@
   "name": "tailwind-formatter",
   "displayName": "Tailwind Formatter",
   "description": "Formatador de Tailwind CSS",
-  "version": "0.0.11",
+  "version": "0.0.10",
   "engines": {
     "vscode": "^1.75.0"
   },
@@ -39,7 +39,7 @@
   },
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
-    "package": "npx vsce package --out src/releases && git add . && git commit -m \"Nova Release\" && npm version patch && git push origin main",
+    "package": "npm version patch && npx vsce package --out src/releases && git add . && git commit -m \"Nova Release\" && git push origin main",
     "patch": "npm version patch",
     "end-sprint": "npm version minor",
     "release": "npm version major"
