@@ -1,9 +1,9 @@
-# Tailwind Formatter
+# Tailwind Class Wrapper
 
-[![Version](https://img.shields.io/badge/version-0.0.4-blue.svg)](https://github.com/juniorcintra/tailwind-formatter)
+[![Version](https://img.shields.io/badge/version-0.0.14-blue.svg)](https://github.com/juniorcintra/tailwind-class-wrapper)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-Extensão para Visual Studio Code que formata classes Tailwind CSS, separando-as em strings individuais para melhor legibilidade e organização do código.
+Extensão para Visual Studio Code que envolve classes Tailwind CSS individuais com aspas, transformando-as em strings separadas para melhor legibilidade e organização do código.
 
 ---
 
@@ -22,13 +22,14 @@ Extensão para Visual Studio Code que formata classes Tailwind CSS, separando-as
 
 ## 🎯 Sobre
 
-O **Tailwind Formatter** é uma extensão do VS Code que facilita a formatação de classes Tailwind CSS. Ele transforma uma string única de classes em múltiplas strings separadas, tornando o código mais legível e fácil de manter.
+O **Tailwind Class Wrapper** é uma extensão do VS Code que facilita a formatação de classes Tailwind CSS. Ele envolve cada classe individual com aspas, transformando uma string única de classes em múltiplas strings separadas, tornando o código mais legível e fácil de manter.
 
 ---
 
 ## ✨ Funcionalidades
 
-- ✅ Formata classes Tailwind CSS em strings separadas
+- ✅ Envolve classes Tailwind CSS individuais com aspas
+- ✅ Transforma classes em strings separadas
 - ✅ Funciona com qualquer arquivo (JSX, TSX, HTML, etc.)
 - ✅ Acionado via menu de contexto (botão direito)
 - ✅ Suporte para seleção de texto
@@ -42,18 +43,18 @@ O **Tailwind Formatter** é uma extensão do VS Code que facilita a formatação
 
 1. Abra o Visual Studio Code
 2. Vá para a aba de Extensões (`Ctrl+Shift+X` ou `Cmd+Shift+X`)
-3. Procure por "Tailwind Formatter"
+3. Procure por "Tailwind Class Wrapper"
 4. Clique em "Instalar"
 
 ### Via Linha de Comando
 
 ```bash
-code --install-extension tailwind-formatter
+code --install-extension JuniorCintra.tailwind-class-wrapper
 ```
 
 ### Manual
 
-1. Baixe o arquivo `.vsix` da [página de releases](https://github.com/juniorcintra/tailwind-formatter/releases)
+1. Baixe o arquivo `.vsix` da [página de releases](https://github.com/juniorcintra/tailwind-class-wrapper/releases)
 2. No VS Code, vá em Extensions → `...` → Install from VSIX
 3. Selecione o arquivo baixado
 
@@ -63,8 +64,8 @@ code --install-extension tailwind-formatter
 
 1. **Selecione** o texto com as classes Tailwind que deseja formatar
 2. **Clique com o botão direito** para abrir o menu de contexto
-3. **Selecione** a opção **"Formatar Tailwind"**
-4. Pronto! Suas classes serão formatadas automaticamente
+3. **Selecione** a opção **"Wrapper Tailwind"**
+4. Pronto! Suas classes serão envolvidas com aspas automaticamente
 
 ---
 
@@ -149,10 +150,10 @@ Contribuições são bem-vindas! Sinta-se à vontade para:
 
 ## 🐛 Reportar Bugs
 
-Encontrou um bug? Por favor, abra uma [issue](https://github.com/juniorcintra/tailwind-formatter/issues) no GitHub.
+Encontrou um bug? Por favor, abra uma [issue](https://github.com/juniorcintra/tailwind-class-wrapper/issues) no GitHub.
 
 ---
 
 ## ⭐ Mostre seu apoio
 
-Se este projeto te ajudou, considere dar uma ⭐️ no [GitHub](https://github.com/juniorcintra/tailwind-formatter)!
+Se este projeto te ajudou, considere dar uma ⭐️ no [GitHub](https://github.com/juniorcintra/tailwind-class-wrapper)!
