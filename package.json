@@ -38,7 +38,7 @@
   },
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
-    "package": "npm version patch && npx vsce package --out src/releases",
+    "package": "npx vsce package --out src/releases && npm version patch",
     "patch": "npm version patch",
     "end-sprint": "npm version minor",
     "release": "npm version major"
