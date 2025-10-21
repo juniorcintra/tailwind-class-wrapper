@@ -1,0 +1,52 @@
+{
+  "name": "tailwind-formatter",
+  "displayName": "Tailwind Formatter",
+  "description": "Formatador de Tailwind CSS",
+  "version": "0.0.4",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juniorcintra/tailwind-formatter.git"
+  },
+  "author": "Junior Cintra",
+  "license": "MIT",
+  "categories": [
+    "Formatters"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.tailwindFormatter",
+        "title": "Formatar Tailwind"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "extension.tailwindFormatter",
+          "when": "editorHasSelection",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "package": "npm version patch && npx vsce package",
+    "patch": "npm version patch",
+    "end-sprint": "npm version minor",
+    "release": "npm version major"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "@types/vscode": "^1.75.0",
+    "typescript": "^5.5.2",
+    "vsce": "^2.10.0"
+  }
+}
