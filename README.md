@@ -1,7 +1,9 @@
 # Tailwind Class Wrapper
 
-[![Version](https://img.shields.io/badge/version-0.0.14-blue.svg)](https://github.com/juniorcintra/tailwind-class-wrapper)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Version](https://img.shields.io/visual-studio-marketplace/v/JuniorCintra.tailwind-class-wrapper?style=flat-square&label=VS%20Code%20Marketplace&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=JuniorCintra.tailwind-class-wrapper)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/JuniorCintra.tailwind-class-wrapper?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=JuniorCintra.tailwind-class-wrapper)
+[![Rating](https://img.shields.io/visual-studio-marketplace/r/JuniorCintra.tailwind-class-wrapper?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=JuniorCintra.tailwind-class-wrapper)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](LICENSE)
 
 Extensão para Visual Studio Code que envolve classes Tailwind CSS individuais com aspas, transformando-as em strings separadas para melhor legibilidade e organização do código.
 
