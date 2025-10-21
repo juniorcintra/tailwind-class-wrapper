@@ -11,6 +11,7 @@
     "url": "https://github.com/juniorcintra/tailwind-formatter.git"
   },
   "author": "Junior Cintra",
+  "publisher": "juniorcintra",
   "license": "MIT",
   "categories": [
     "Formatters"
