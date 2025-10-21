@@ -1,7 +1,9 @@
 # Tailwind Class Wrapper
 
-[![Version](https://img.shields.io/badge/version-0.0.14-blue.svg)](https://github.com/juniorcintra/tailwind-class-wrapper)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Version](https://img.shields.io/visual-studio-marketplace/v/JuniorCintra.tailwind-class-wrapper?style=flat-square&label=VS%20Code%20Marketplace&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=JuniorCintra.tailwind-class-wrapper)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/JuniorCintra.tailwind-class-wrapper?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=JuniorCintra.tailwind-class-wrapper)
+[![Rating](https://img.shields.io/visual-studio-marketplace/r/JuniorCintra.tailwind-class-wrapper?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=JuniorCintra.tailwind-class-wrapper)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](LICENSE)
 
 Extensão para Visual Studio Code que envolve classes Tailwind CSS individuais com aspas, transformando-as em strings separadas para melhor legibilidade e organização do código.
 
@@ -76,13 +78,15 @@ code --install-extension JuniorCintra.tailwind-class-wrapper
 Selecione o texto e clique com o botão direito → "Wrapper Tailwind"
 
 **Antes:**
+
 ```tsx
 mx-auto my-8 flex items-center justify-between
 ```
 
 **Depois:**
+
 ```tsx
-'mx-auto', 'my-8', 'flex', 'items-center', 'justify-between'
+"mx-auto", "my-8", "flex", "items-center", "justify-between";
 ```
 
 ### Exemplo 2: Transformação Automática ao Salvar (className)
@@ -90,15 +94,17 @@ mx-auto my-8 flex items-center justify-between
 Quando você salva o arquivo, a extensão transforma automaticamente:
 
 **Antes:**
+
 ```tsx
-<div className="bg-blue-500 text-white p-4 rounded-lg shadow-md">
-  Conteúdo
-</div>
+<div className="bg-blue-500 text-white p-4 rounded-lg shadow-md">Conteúdo</div>
 ```
 
 **Depois:**
+
 ```tsx
-<div className={cn('bg-blue-500', 'text-white', 'p-4', 'rounded-lg', 'shadow-md')}>
+<div
+  className={cn("bg-blue-500", "text-white", "p-4", "rounded-lg", "shadow-md")}
+>
   Conteúdo
 </div>
 ```
@@ -106,6 +112,7 @@ Quando você salva o arquivo, a extensão transforma automaticamente:
 ### Exemplo 3: React Component Completo
 
 **Antes:**
+
 ```tsx
 const Button = () => (
   <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
@@ -115,11 +122,22 @@ const Button = () => (
 ```
 
 **Depois (ao salvar):**
+
 ```tsx
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 const Button = () => (
-  <button className={cn('bg-indigo-600', 'hover:bg-indigo-700', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded')}>
+  <button
+    className={cn(
+      "bg-indigo-600",
+      "hover:bg-indigo-700",
+      "text-white",
+      "font-bold",
+      "py-2",
+      "px-4",
+      "rounded"
+    )}
+  >
     Click me
   </button>
 );
@@ -130,11 +148,13 @@ const Button = () => (
 Se o projeto usa `clsx` ao invés de `cn`:
 
 **Antes:**
+
 ```tsx
 <div className="flex justify-center items-center gap-4">
 ```
 
 **Depois (ao salvar):**
+
 ```tsx
 <div className={clsx('flex', 'justify-center', 'items-center', 'gap-4')}>
 ```
