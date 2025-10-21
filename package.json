@@ -2,7 +2,7 @@
   "name": "tailwind-class-wrapper",
   "displayName": "Tailwind Class Wrapper",
   "description": "Wrapper para classes Tailwind CSS",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "engines": {
     "vscode": "^1.75.0"
   },
