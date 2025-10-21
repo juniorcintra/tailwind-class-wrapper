@@ -124,12 +124,25 @@ function addImportIfNeeded(
 ): void {
   const text = document.getText();
 
-  // Check if import already exists
-  const hasImport = new RegExp(`import\s+.*\b${utilityFunction}\b.*from`).test(
-    text
-  );
+  if (!importPath) {
+    return; // No import path provided, skip
+  }
 
-  if (!hasImport && importPath) {
+  // Check if import already exists from the same path
+  // Match patterns like: import { cn } from "@/lib/utils"
+  const hasSamePathImport = new RegExp(
+    `import\\s+\\{[^}]*\\b${utilityFunction}\\b[^}]*\\}\\s+from\\s+['"]${importPath.replace(/\//g, '\\/')}['"]`,
+    "m"
+  ).test(text);
+  
+  // Also check for any existing import of the function (even from different path)
+  const hasAnyImport = new RegExp(
+    `import\\s+\\{[^}]*\\b${utilityFunction}\\b[^}]*\\}\\s+from`,
+    "m"
+  ).test(text);
+
+  // Don't add import if it already exists (from same or different path)
+  if (!hasAnyImport && !hasSamePathImport) {
     // Find the position to insert the import (after last import or at the beginning)
     const lines = text.split("\n");
     let insertLine = 0;
