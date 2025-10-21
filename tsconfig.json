@@ -6,7 +6,11 @@
     "lib": ["ES2018"],
     "sourceMap": true,
     "rootDir": "src",
-    "strict": true
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": ["src"]
 }

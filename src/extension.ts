@@ -34,12 +34,41 @@ async function detectCnUtility(): Promise<{ exists: boolean; fileUri?: vscode.Ur
 // Helper function to check if path alias (@) is configured
 async function hasPathAlias(): Promise<boolean> {
   try {
-    const tsconfigFiles = await vscode.workspace.findFiles('**/tsconfig.json', '**/node_modules/**', 1);
-    if (tsconfigFiles.length > 0) {
-      const document = await vscode.workspace.openTextDocument(tsconfigFiles[0]);
+    // Check both tsconfig.json and jsconfig.json
+    const configFiles = await vscode.workspace.findFiles(
+      '**/tsconfig.json',
+      '**/node_modules/**',
+      1
+    );
+    
+    const jsConfigFiles = await vscode.workspace.findFiles(
+      '**/jsconfig.json',
+      '**/node_modules/**',
+      1
+    );
+    
+    const allConfigFiles = [...configFiles, ...jsConfigFiles];
+    
+    if (allConfigFiles.length > 0) {
+      const document = await vscode.workspace.openTextDocument(allConfigFiles[0]);
       const text = document.getText();
-      // Check if @ alias is configured in paths
-      return /@["']/.test(text) && /paths/.test(text);
+      
+      // Try to parse the JSON and check for path aliases
+      try {
+        // Remove comments from JSON (simple approach)
+        const cleanedText = text.replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
+        const config = JSON.parse(cleanedText);
+        
+        // Check if compilerOptions.paths exists and has @ alias
+        if (config.compilerOptions?.paths) {
+          const paths = config.compilerOptions.paths;
+          // Check for @ or @/* aliases
+          return '@/*' in paths || '@' in paths;
+        }
+      } catch (parseError) {
+        // Fallback to regex if JSON parsing fails
+        return /@["'\/]/.test(text) && /paths/.test(text) && /compilerOptions/.test(text);
+      }
     }
     return false;
   } catch (error) {
