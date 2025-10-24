@@ -16,27 +16,41 @@ async function detectCnUtility(): Promise<{
       { pattern: "**/utils/cn.js", aliasPath: "@/utils/cn" },
       { pattern: "**/src/lib/utils.ts", aliasPath: "@/lib/utils" },
       { pattern: "**/src/utils/cn.ts", aliasPath: "@/utils/cn" },
+      { pattern: "**/lib/cn.ts", aliasPath: "@/lib/cn" },
+      { pattern: "**/lib/cn.js", aliasPath: "@/lib/cn" },
+      { pattern: "**/utils.ts", aliasPath: "@/utils" },
+      { pattern: "**/utils.js", aliasPath: "@/utils" },
     ];
 
     for (const { pattern, aliasPath } of patterns) {
       const files = await vscode.workspace.findFiles(
         pattern,
         "**/node_modules/**",
-        1
+        5 // Increase limit to find more files
       );
+
       if (files.length > 0) {
-        // Check if the file contains a cn function
-        const document = await vscode.workspace.openTextDocument(files[0]);
-        const text = document.getText();
-        if (
-          /\bfunction\s+cn\b|\bconst\s+cn\s*=|\bexport\s+.*\bcn\b/.test(text)
-        ) {
-          return { exists: true, fileUri: files[0], aliasPath };
+        // Check each file for cn function
+        for (const file of files) {
+          const document = await vscode.workspace.openTextDocument(file);
+          const text = document.getText();
+
+          if (
+            /\bfunction\s+cn\b|\bconst\s+cn\s*=|\bexport\s+.*\bcn\b/.test(text)
+          ) {
+            console.log(
+              `Found cn utility in ${file.fsPath} with alias ${aliasPath}`
+            );
+            return { exists: true, fileUri: file, aliasPath };
+          }
         }
       }
     }
+
+    console.log("No cn utility found in project");
     return { exists: false };
   } catch (error) {
+    console.log("Error detecting cn utility:", error);
     return { exists: false };
   }
 }
@@ -44,52 +58,50 @@ async function detectCnUtility(): Promise<{
 // Helper function to check if path alias (@) is configured
 async function hasPathAlias(): Promise<boolean> {
   try {
-    // Check both tsconfig.json and jsconfig.json
+    // Check both tsconfig.json and jsconfig.json in the entire workspace
     const configFiles = await vscode.workspace.findFiles(
-      "**/tsconfig.json",
+      "**/{tsconfig,jsconfig}.json",
       "**/node_modules/**",
-      1
+      10 // Increase limit to find more config files
     );
 
-    const jsConfigFiles = await vscode.workspace.findFiles(
-      "**/jsconfig.json",
-      "**/node_modules/**",
-      1
-    );
+    if (configFiles.length === 0) {
+      console.log("No tsconfig.json or jsconfig.json found");
+      return false;
+    }
 
-    const allConfigFiles = [...configFiles, ...jsConfigFiles];
-
-    if (allConfigFiles.length > 0) {
-      const document = await vscode.workspace.openTextDocument(
-        allConfigFiles[0]
-      );
-      const text = document.getText();
-
-      // Try to parse the JSON and check for path aliases
+    for (const configFile of configFiles) {
       try {
+        const document = await vscode.workspace.openTextDocument(configFile);
+        const text = document.getText();
+
         // Remove comments from JSON (simple approach)
         const cleanedText = text
           .replace(/\/\/.*$/gm, "")
           .replace(/\/\*[\s\S]*?\*\//g, "");
+
         const config = JSON.parse(cleanedText);
 
         // Check if compilerOptions.paths exists and has @ alias
         if (config.compilerOptions?.paths) {
           const paths = config.compilerOptions.paths;
           // Check for @ or @/* aliases
-          return "@/*" in paths || "@" in paths;
+          if ("@/*" in paths || "@" in paths) {
+            console.log(`Found @ alias in ${configFile.fsPath}`);
+            return true;
+          }
         }
       } catch (parseError) {
-        // Fallback to regex if JSON parsing fails
-        return (
-          /@["'\/]/.test(text) &&
-          /paths/.test(text) &&
-          /compilerOptions/.test(text)
-        );
+        console.log(`Failed to parse ${configFile.fsPath}:`, parseError);
+        // Continue to next config file
+        continue;
       }
     }
+
+    console.log("No @ alias found in any config file");
     return false;
   } catch (error) {
+    console.log("Error checking for path alias:", error);
     return false;
   }
 }
@@ -131,10 +143,13 @@ function addImportIfNeeded(
   // Check if import already exists from the same path
   // Match patterns like: import { cn } from "@/lib/utils"
   const hasSamePathImport = new RegExp(
-    `import\\s+\\{[^}]*\\b${utilityFunction}\\b[^}]*\\}\\s+from\\s+['"]${importPath.replace(/\//g, '\\/')}['"]`,
+    `import\\s+\\{[^}]*\\b${utilityFunction}\\b[^}]*\\}\\s+from\\s+['"]${importPath.replace(
+      /\//g,
+      "\\/"
+    )}['"]`,
     "m"
   ).test(text);
-  
+
   // Also check for any existing import of the function (even from different path)
   const hasAnyImport = new RegExp(
     `import\\s+\\{[^}]*\\b${utilityFunction}\\b[^}]*\\}\\s+from`,
@@ -227,8 +242,8 @@ export function activate(context: vscode.ExtensionContext) {
         .split(/\s+/)
         .filter(Boolean);
 
-      // Only transform if there's more than one class
-      if (classArray.length <= 1) {
+      // Only transform if there's more than 5 classes
+      if (classArray.length <= 5) {
         return;
       }
 
